@@ -1,8 +1,6 @@
 pipeline {
     
-    agent {
-    docker { image 'python' }
-  } 
+    agent any
     
     environment {
         IMAGE_TAG = "${BUILD_NUMBER}"
@@ -23,7 +21,7 @@ pipeline {
                     sh '''
                     cd python-jenkins-argocd-k8s
                     echo 'Build Docker Image'
-                    docker build -t atharvarthakur/cicd-e2e:${BUILD_NUMBER} .
+                    docker build -t atharvarthakur/atharvarthakur:${BUILD_NUMBER} .
                     '''
                 }
             }
@@ -36,7 +34,7 @@ pipeline {
                         sh '''
                         echo 'Push to Repo'
                         docker login -u $USERNAME -p $PASSWORD
-                        docker push atharvarthakur/cicd-e2e:${BUILD_NUMBER}
+                        docker push atharvarthakur/atharvarthakur:${BUILD_NUMBER}
                         '''
                     }
                 }
